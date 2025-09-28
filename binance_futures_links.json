@@ -1,0 +1,882 @@
+{
+  "categories": {
+    "General Information": [
+      {
+        "title": "General Info",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/general-info",
+        "endpoint": "general-info",
+        "category": "General Information"
+      },
+      {
+        "title": "Change Log",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/change-log",
+        "endpoint": "change-log",
+        "category": "General Information"
+      }
+    ],
+    "Market Data Endpoints": [
+      {
+        "title": "Market Data",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data",
+        "endpoint": "market-data",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Test Connectivity",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/test-connectivity",
+        "endpoint": "market-data/test-connectivity",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Check Server Time",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/check-server-time",
+        "endpoint": "market-data/check-server-time",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Exchange Information",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/exchange-information",
+        "endpoint": "market-data/exchange-information",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Order Book",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/order-book",
+        "endpoint": "market-data/order-book",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Recent Trades List",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/recent-trades-list",
+        "endpoint": "market-data/recent-trades-list",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Old Trade Lookup",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/old-trade-lookup",
+        "endpoint": "market-data/old-trade-lookup",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Compressed/Aggregate Trades List",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/compressed-aggregate-trades-list",
+        "endpoint": "market-data/compressed-aggregate-trades-list",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Kline/Candlestick Data",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/kline-candlestick-data",
+        "endpoint": "market-data/kline-candlestick-data",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Continuous Contract Kline/Candlestick Data",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/continuous-contract-kline-candlestick-data",
+        "endpoint": "market-data/continuous-contract-kline-candlestick-data",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Index Price Kline/Candlestick Data",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/index-price-kline-candlestick-data",
+        "endpoint": "market-data/index-price-kline-candlestick-data",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Mark Price Kline/Candlestick Data",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/mark-price-kline-candlestick-data",
+        "endpoint": "market-data/mark-price-kline-candlestick-data",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Mark Price",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/mark-price",
+        "endpoint": "market-data/mark-price",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Get Funding Rate History",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/get-funding-rate-history",
+        "endpoint": "market-data/get-funding-rate-history",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "24hr Ticker Price Change Statistics",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/24hr-ticker-price-change-statistics",
+        "endpoint": "market-data/24hr-ticker-price-change-statistics",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Symbol Price Ticker",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/symbol-price-ticker",
+        "endpoint": "market-data/symbol-price-ticker",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Symbol Order Book Ticker",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/symbol-order-book-ticker",
+        "endpoint": "market-data/symbol-order-book-ticker",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Open Interest",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/open-interest",
+        "endpoint": "market-data/open-interest",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Open Interest Statistics",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/open-interest-statistics",
+        "endpoint": "market-data/open-interest-statistics",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Top Trader Long/Short Ratio (Accounts)",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/top-trader-long-short-ratio-accounts",
+        "endpoint": "market-data/top-trader-long-short-ratio-accounts",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Top Trader Long/Short Ratio (Positions)",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/top-trader-long-short-ratio-positions",
+        "endpoint": "market-data/top-trader-long-short-ratio-positions",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Long/Short Ratio",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/long-short-ratio",
+        "endpoint": "market-data/long-short-ratio",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Taker Buy/Sell Volume",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/taker-buy-sell-volume",
+        "endpoint": "market-data/taker-buy-sell-volume",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Basis",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/basis",
+        "endpoint": "market-data/basis",
+        "category": "Market Data Endpoints"
+      },
+      {
+        "title": "Composite Index Symbol Information",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/composite-index-symbol-information",
+        "endpoint": "market-data/composite-index-symbol-information",
+        "category": "Market Data Endpoints"
+      }
+    ],
+    "Account/Trade Endpoints": [
+      {
+        "title": "Account/Trades",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades",
+        "endpoint": "account-trades",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "New Order",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/new-order",
+        "endpoint": "account-trades/new-order",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Place Multiple Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/place-multiple-orders",
+        "endpoint": "account-trades/place-multiple-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Query Order",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/query-order",
+        "endpoint": "account-trades/query-order",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Cancel Order",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/cancel-order",
+        "endpoint": "account-trades/cancel-order",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Cancel All Open Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/cancel-all-open-orders",
+        "endpoint": "account-trades/cancel-all-open-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Cancel Multiple Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/cancel-multiple-orders",
+        "endpoint": "account-trades/cancel-multiple-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Auto-Cancel All Open Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/auto-cancel-all-open-orders",
+        "endpoint": "account-trades/auto-cancel-all-open-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Query Current Open Order",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/query-current-open-order",
+        "endpoint": "account-trades/query-current-open-order",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Current All Open Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/current-all-open-orders",
+        "endpoint": "account-trades/current-all-open-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "All Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/all-orders",
+        "endpoint": "account-trades/all-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Futures Account Balance",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/futures-account-balance",
+        "endpoint": "account-trades/futures-account-balance",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Account Information",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/account-information",
+        "endpoint": "account-trades/account-information",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Change Initial Leverage",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/change-initial-leverage",
+        "endpoint": "account-trades/change-initial-leverage",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Change Margin Type",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/change-margin-type",
+        "endpoint": "account-trades/change-margin-type",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Modify Isolated Position Margin",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/modify-isolated-position-margin",
+        "endpoint": "account-trades/modify-isolated-position-margin",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Get Position Margin Change History",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/get-position-margin-change-history",
+        "endpoint": "account-trades/get-position-margin-change-history",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Position Information",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/position-information",
+        "endpoint": "account-trades/position-information",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Account Trade List",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/account-trade-list",
+        "endpoint": "account-trades/account-trade-list",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Get Income History",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/get-income-history",
+        "endpoint": "account-trades/get-income-history",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Leverage Bracket",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/leverage-bracket",
+        "endpoint": "account-trades/leverage-bracket",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "User's Force Orders",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/users-force-orders",
+        "endpoint": "account-trades/users-force-orders",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Position ADL Quantile Estimation",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/position-adr",
+        "endpoint": "account-trades/position-adr",
+        "category": "Account/Trade Endpoints"
+      },
+      {
+        "title": "Trading Status",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/trading-status",
+        "endpoint": "account-trades/trading-status",
+        "category": "Account/Trade Endpoints"
+      }
+    ],
+    "WebSocket Market Streams": [
+      {
+        "title": "WebSocket Market Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams",
+        "endpoint": "websocket-market-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Live Subscribing/Unsubscribing",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/live-subscribing-unsubscribing",
+        "endpoint": "websocket-market-streams/live-subscribing-unsubscribing",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Aggregate Trade Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/aggregate-trade-streams",
+        "endpoint": "websocket-market-streams/aggregate-trade-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Trade Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/trade-streams",
+        "endpoint": "websocket-market-streams/trade-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Kline/Candlestick Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/kline-candlestick-streams",
+        "endpoint": "websocket-market-streams/kline-candlestick-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Continuous Contract Kline/Candlestick Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/continuous-contract-kline-candlestick-streams",
+        "endpoint": "websocket-market-streams/continuous-contract-kline-candlestick-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Individual Symbol Mini Ticker Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/individual-symbol-mini-ticker-stream",
+        "endpoint": "websocket-market-streams/individual-symbol-mini-ticker-stream",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "All Market Mini Tickers Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/all-market-mini-tickers-stream",
+        "endpoint": "websocket-market-streams/all-market-mini-tickers-stream",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Individual Symbol Ticker Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/individual-symbol-ticker-streams",
+        "endpoint": "websocket-market-streams/individual-symbol-ticker-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "All Market Tickers Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/all-market-tickers-stream",
+        "endpoint": "websocket-market-streams/all-market-tickers-stream",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Individual Symbol Book Ticker Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/individual-symbol-book-ticker-streams",
+        "endpoint": "websocket-market-streams/individual-symbol-book-ticker-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "All Book Tickers Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/all-book-tickers-stream",
+        "endpoint": "websocket-market-streams/all-book-tickers-stream",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Partial Book Depth Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/partial-book-depth-streams",
+        "endpoint": "websocket-market-streams/partial-book-depth-streams",
+        "category": "WebSocket Market Streams"
+      },
+      {
+        "title": "Diff. Depth Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/diff-depth-stream",
+        "endpoint": "websocket-market-streams/diff-depth-stream",
+        "category": "WebSocket Market Streams"
+      }
+    ],
+    "User Data Streams": [
+      {
+        "title": "User Data Streams",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams",
+        "endpoint": "user-data-streams",
+        "category": "User Data Streams"
+      },
+      {
+        "title": "Start User Data Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/start-user-data-stream",
+        "endpoint": "user-data-streams/start-user-data-stream",
+        "category": "User Data Streams"
+      },
+      {
+        "title": "Keepalive User Data Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/keepalive-user-data-stream",
+        "endpoint": "user-data-streams/keepalive-user-data-stream",
+        "category": "User Data Streams"
+      },
+      {
+        "title": "Close User Data Stream",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/close-user-data-stream",
+        "endpoint": "user-data-streams/close-user-data-stream",
+        "category": "User Data Streams"
+      },
+      {
+        "title": "Event: Account Update",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/event-account-update",
+        "endpoint": "user-data-streams/event-account-update",
+        "category": "User Data Streams"
+      },
+      {
+        "title": "Event: Order Update",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/event-order-update",
+        "endpoint": "user-data-streams/event-order-update",
+        "category": "User Data Streams"
+      },
+      {
+        "title": "Event: Account Config Update",
+        "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/event-account-config-update",
+        "endpoint": "user-data-streams/event-account-config-update",
+        "category": "User Data Streams"
+      }
+    ]
+  },
+  "all_links": [
+    {
+      "title": "General Info",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/general-info",
+      "endpoint": "general-info",
+      "category": "General Information"
+    },
+    {
+      "title": "Change Log",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/change-log",
+      "endpoint": "change-log",
+      "category": "General Information"
+    },
+    {
+      "title": "Market Data",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data",
+      "endpoint": "market-data",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Test Connectivity",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/test-connectivity",
+      "endpoint": "market-data/test-connectivity",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Check Server Time",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/check-server-time",
+      "endpoint": "market-data/check-server-time",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Exchange Information",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/exchange-information",
+      "endpoint": "market-data/exchange-information",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Order Book",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/order-book",
+      "endpoint": "market-data/order-book",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Recent Trades List",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/recent-trades-list",
+      "endpoint": "market-data/recent-trades-list",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Old Trade Lookup",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/old-trade-lookup",
+      "endpoint": "market-data/old-trade-lookup",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Compressed/Aggregate Trades List",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/compressed-aggregate-trades-list",
+      "endpoint": "market-data/compressed-aggregate-trades-list",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Kline/Candlestick Data",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/kline-candlestick-data",
+      "endpoint": "market-data/kline-candlestick-data",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Continuous Contract Kline/Candlestick Data",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/continuous-contract-kline-candlestick-data",
+      "endpoint": "market-data/continuous-contract-kline-candlestick-data",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Index Price Kline/Candlestick Data",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/index-price-kline-candlestick-data",
+      "endpoint": "market-data/index-price-kline-candlestick-data",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Mark Price Kline/Candlestick Data",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/mark-price-kline-candlestick-data",
+      "endpoint": "market-data/mark-price-kline-candlestick-data",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Mark Price",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/mark-price",
+      "endpoint": "market-data/mark-price",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Get Funding Rate History",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/get-funding-rate-history",
+      "endpoint": "market-data/get-funding-rate-history",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "24hr Ticker Price Change Statistics",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/24hr-ticker-price-change-statistics",
+      "endpoint": "market-data/24hr-ticker-price-change-statistics",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Symbol Price Ticker",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/symbol-price-ticker",
+      "endpoint": "market-data/symbol-price-ticker",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Symbol Order Book Ticker",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/symbol-order-book-ticker",
+      "endpoint": "market-data/symbol-order-book-ticker",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Open Interest",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/open-interest",
+      "endpoint": "market-data/open-interest",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Open Interest Statistics",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/open-interest-statistics",
+      "endpoint": "market-data/open-interest-statistics",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Top Trader Long/Short Ratio (Accounts)",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/top-trader-long-short-ratio-accounts",
+      "endpoint": "market-data/top-trader-long-short-ratio-accounts",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Top Trader Long/Short Ratio (Positions)",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/top-trader-long-short-ratio-positions",
+      "endpoint": "market-data/top-trader-long-short-ratio-positions",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Long/Short Ratio",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/long-short-ratio",
+      "endpoint": "market-data/long-short-ratio",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Taker Buy/Sell Volume",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/taker-buy-sell-volume",
+      "endpoint": "market-data/taker-buy-sell-volume",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Basis",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/basis",
+      "endpoint": "market-data/basis",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Composite Index Symbol Information",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/composite-index-symbol-information",
+      "endpoint": "market-data/composite-index-symbol-information",
+      "category": "Market Data Endpoints"
+    },
+    {
+      "title": "Account/Trades",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades",
+      "endpoint": "account-trades",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "New Order",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/new-order",
+      "endpoint": "account-trades/new-order",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Place Multiple Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/place-multiple-orders",
+      "endpoint": "account-trades/place-multiple-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Query Order",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/query-order",
+      "endpoint": "account-trades/query-order",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Cancel Order",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/cancel-order",
+      "endpoint": "account-trades/cancel-order",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Cancel All Open Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/cancel-all-open-orders",
+      "endpoint": "account-trades/cancel-all-open-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Cancel Multiple Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/cancel-multiple-orders",
+      "endpoint": "account-trades/cancel-multiple-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Auto-Cancel All Open Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/auto-cancel-all-open-orders",
+      "endpoint": "account-trades/auto-cancel-all-open-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Query Current Open Order",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/query-current-open-order",
+      "endpoint": "account-trades/query-current-open-order",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Current All Open Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/current-all-open-orders",
+      "endpoint": "account-trades/current-all-open-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "All Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/all-orders",
+      "endpoint": "account-trades/all-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Futures Account Balance",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/futures-account-balance",
+      "endpoint": "account-trades/futures-account-balance",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Account Information",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/account-information",
+      "endpoint": "account-trades/account-information",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Change Initial Leverage",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/change-initial-leverage",
+      "endpoint": "account-trades/change-initial-leverage",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Change Margin Type",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/change-margin-type",
+      "endpoint": "account-trades/change-margin-type",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Modify Isolated Position Margin",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/modify-isolated-position-margin",
+      "endpoint": "account-trades/modify-isolated-position-margin",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Get Position Margin Change History",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/get-position-margin-change-history",
+      "endpoint": "account-trades/get-position-margin-change-history",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Position Information",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/position-information",
+      "endpoint": "account-trades/position-information",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Account Trade List",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/account-trade-list",
+      "endpoint": "account-trades/account-trade-list",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Get Income History",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/get-income-history",
+      "endpoint": "account-trades/get-income-history",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Leverage Bracket",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/leverage-bracket",
+      "endpoint": "account-trades/leverage-bracket",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "User's Force Orders",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/users-force-orders",
+      "endpoint": "account-trades/users-force-orders",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Position ADL Quantile Estimation",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/position-adr",
+      "endpoint": "account-trades/position-adr",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "Trading Status",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account-trades/trading-status",
+      "endpoint": "account-trades/trading-status",
+      "category": "Account/Trade Endpoints"
+    },
+    {
+      "title": "WebSocket Market Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams",
+      "endpoint": "websocket-market-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Live Subscribing/Unsubscribing",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/live-subscribing-unsubscribing",
+      "endpoint": "websocket-market-streams/live-subscribing-unsubscribing",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Aggregate Trade Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/aggregate-trade-streams",
+      "endpoint": "websocket-market-streams/aggregate-trade-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Trade Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/trade-streams",
+      "endpoint": "websocket-market-streams/trade-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Kline/Candlestick Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/kline-candlestick-streams",
+      "endpoint": "websocket-market-streams/kline-candlestick-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Continuous Contract Kline/Candlestick Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/continuous-contract-kline-candlestick-streams",
+      "endpoint": "websocket-market-streams/continuous-contract-kline-candlestick-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Individual Symbol Mini Ticker Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/individual-symbol-mini-ticker-stream",
+      "endpoint": "websocket-market-streams/individual-symbol-mini-ticker-stream",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "All Market Mini Tickers Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/all-market-mini-tickers-stream",
+      "endpoint": "websocket-market-streams/all-market-mini-tickers-stream",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Individual Symbol Ticker Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/individual-symbol-ticker-streams",
+      "endpoint": "websocket-market-streams/individual-symbol-ticker-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "All Market Tickers Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/all-market-tickers-stream",
+      "endpoint": "websocket-market-streams/all-market-tickers-stream",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Individual Symbol Book Ticker Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/individual-symbol-book-ticker-streams",
+      "endpoint": "websocket-market-streams/individual-symbol-book-ticker-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "All Book Tickers Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/all-book-tickers-stream",
+      "endpoint": "websocket-market-streams/all-book-tickers-stream",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Partial Book Depth Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/partial-book-depth-streams",
+      "endpoint": "websocket-market-streams/partial-book-depth-streams",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "Diff. Depth Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/diff-depth-stream",
+      "endpoint": "websocket-market-streams/diff-depth-stream",
+      "category": "WebSocket Market Streams"
+    },
+    {
+      "title": "User Data Streams",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams",
+      "endpoint": "user-data-streams",
+      "category": "User Data Streams"
+    },
+    {
+      "title": "Start User Data Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/start-user-data-stream",
+      "endpoint": "user-data-streams/start-user-data-stream",
+      "category": "User Data Streams"
+    },
+    {
+      "title": "Keepalive User Data Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/keepalive-user-data-stream",
+      "endpoint": "user-data-streams/keepalive-user-data-stream",
+      "category": "User Data Streams"
+    },
+    {
+      "title": "Close User Data Stream",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/close-user-data-stream",
+      "endpoint": "user-data-streams/close-user-data-stream",
+      "category": "User Data Streams"
+    },
+    {
+      "title": "Event: Account Update",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/event-account-update",
+      "endpoint": "user-data-streams/event-account-update",
+      "category": "User Data Streams"
+    },
+    {
+      "title": "Event: Order Update",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/event-order-update",
+      "endpoint": "user-data-streams/event-order-update",
+      "category": "User Data Streams"
+    },
+    {
+      "title": "Event: Account Config Update",
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/user-data-streams/event-account-config-update",
+      "endpoint": "user-data-streams/event-account-config-update",
+      "category": "User Data Streams"
+    }
+  ],
+  "total_count": 72,
+  "generated_at": "2025-09-28 14:37:54"
+}

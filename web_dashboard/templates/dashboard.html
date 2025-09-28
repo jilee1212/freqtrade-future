@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freqtrade Futures Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #161b22 !important;
+            border-bottom: 1px solid #21262d;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            color: #c9d1d9;
+        }
+        .card-header {
+            background-color: #21262d;
+            border-bottom: 1px solid #30363d;
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-running { background-color: #238636; }
+        .status-stopped { background-color: #f85149; }
+        .status-unknown { background-color: #f0883e; }
+
+        .metric-card {
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .profit-positive { color: #238636; }
+        .profit-negative { color: #f85149; }
+        .profit-neutral { color: #f0883e; }
+
+        .alert-danger { background-color: #f85149; color: white; }
+        .alert-warning { background-color: #f0883e; color: white; }
+        .alert-info { background-color: #0969da; color: white; }
+
+        .trade-item {
+            border-left: 3px solid;
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #21262d;
+        }
+        .trade-long { border-left-color: #238636; }
+        .trade-short { border-left-color: #f85149; }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .last-update {
+            font-size: 0.8em;
+            color: #7d8590;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>
+                Freqtrade Futures Dashboard
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text">
+                    <span id="bot-status-indicator" class="status-indicator status-unknown"></span>
+                    <span id="bot-status-text">Unknown</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <!-- Status Row -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-wallet fa-2x mb-2 text-primary"></i>
+                        <h5 class="card-title">Total Balance</h5>
+                        <h3 id="total-balance" class="text-primary">$0.00</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-2x mb-2" id="profit-icon"></i>
+                        <h5 class="card-title">Total P&L</h5>
+                        <h3 id="total-profit" class="profit-neutral">$0.00</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-exchange-alt fa-2x mb-2 text-info"></i>
+                        <h5 class="card-title">Open Trades</h5>
+                        <h3 id="open-trades-count" class="text-info">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-exclamation-triangle fa-2x mb-2 text-warning"></i>
+                        <h5 class="card-title">Risk Level</h5>
+                        <h3 id="risk-level" class="text-warning">LOW</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-area me-2"></i>
+                            Equity Curve
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="equity-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            Risk Monitoring
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <h6>Portfolio Risk</h6>
+                                    <h4 id="portfolio-risk" class="text-warning">2.5%</h4>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <h6>Max Drawdown</h6>
+                                    <h4 id="max-drawdown" class="text-danger">0.63%</h4>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <h6>Leverage</h6>
+                                    <h4 id="current-leverage" class="text-info">5x</h4>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <h6>Margin Ratio</h6>
+                                    <h4 id="margin-ratio" class="text-success">85%</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trades & Alerts Row -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>
+                            Recent Trades
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-trades" style="max-height: 300px; overflow-y: auto;">
+                            <!-- Recent trades will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-bell me-2"></i>
+                            Risk Alerts
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="risk-alerts" style="max-height: 300px; overflow-y: auto;">
+                            <!-- Risk alerts will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Performance -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-cogs me-2"></i>
+                            Strategy Performance
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="performance-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <small class="last-update">
+                        Last updated: <span id="last-update">Never</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // WebSocket 연결
+        const socket = io();
+
+        // 차트 초기화
+        let equityChart, performanceChart;
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            loadInitialData();
+        });
+
+        // WebSocket 이벤트 핸들러
+        socket.on('connect', function() {
+            console.log('Connected to server');
+            socket.emit('request_update');
+        });
+
+        socket.on('dashboard_update', function(data) {
+            updateDashboard(data);
+        });
+
+        function initCharts() {
+            // Equity Curve Chart
+            const equityCtx = document.getElementById('equity-chart').getContext('2d');
+            equityChart = new Chart(equityCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Portfolio Value',
+                        data: [],
+                        borderColor: '#238636',
+                        backgroundColor: 'rgba(35, 134, 54, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#c9d1d9' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#c9d1d9' },
+                            grid: { color: '#21262d' }
+                        },
+                        y: {
+                            ticks: { color: '#c9d1d9' },
+                            grid: { color: '#21262d' }
+                        }
+                    }
+                }
+            });
+
+            // Performance Chart
+            const perfCtx = document.getElementById('performance-chart').getContext('2d');
+            performanceChart = new Chart(perfCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Strategy Returns (%)',
+                        data: [],
+                        backgroundColor: '#0969da'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#c9d1d9' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#c9d1d9' },
+                            grid: { color: '#21262d' }
+                        },
+                        y: {
+                            ticks: { color: '#c9d1d9' },
+                            grid: { color: '#21262d' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadInitialData() {
+            // API에서 초기 데이터 로드
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        updateDashboard(data.data);
+                    }
+                })
+                .catch(error => console.error('Error loading initial data:', error));
+
+            // 차트 데이터 로드
+            loadChartData();
+        }
+
+        function loadChartData() {
+            fetch('/api/trades/chart')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        updateEquityChart(data.data);
+                    }
+                })
+                .catch(error => console.error('Error loading chart data:', error));
+
+            fetch('/api/performance')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        updatePerformanceChart(data.data);
+                    }
+                })
+                .catch(error => console.error('Error loading performance data:', error));
+        }
+
+        function updateDashboard(data) {
+            // Bot status
+            const statusIndicator = document.getElementById('bot-status-indicator');
+            const statusText = document.getElementById('bot-status-text');
+
+            statusIndicator.className = `status-indicator status-${data.bot_status}`;
+            statusText.textContent = data.bot_status.toUpperCase();
+
+            // Balance
+            document.getElementById('total-balance').textContent =
+                `$${data.current_balance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+            // Profit
+            const profitElement = document.getElementById('total-profit');
+            const profitIcon = document.getElementById('profit-icon');
+            const profit = data.total_profit;
+
+            profitElement.textContent = `$${profit.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+            if (profit > 0) {
+                profitElement.className = 'profit-positive';
+                profitIcon.className = 'fas fa-arrow-up fa-2x mb-2 profit-positive';
+            } else if (profit < 0) {
+                profitElement.className = 'profit-negative';
+                profitIcon.className = 'fas fa-arrow-down fa-2x mb-2 profit-negative';
+            } else {
+                profitElement.className = 'profit-neutral';
+                profitIcon.className = 'fas fa-minus fa-2x mb-2 profit-neutral';
+            }
+
+            // Open trades
+            document.getElementById('open-trades-count').textContent = data.open_trades.length;
+
+            // Recent trades
+            updateRecentTrades(data.recent_trades);
+
+            // Last update
+            document.getElementById('last-update').textContent =
+                new Date(data.last_update).toLocaleString();
+        }
+
+        function updateRecentTrades(trades) {
+            const container = document.getElementById('recent-trades');
+
+            if (!trades || trades.length === 0) {
+                container.innerHTML = '<p class="text-muted">No recent trades</p>';
+                return;
+            }
+
+            container.innerHTML = trades.map(trade => `
+                <div class="trade-item trade-${trade.side || 'long'}">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>${trade.pair || 'BTC/USDT:USDT'}</strong>
+                            <span class="badge bg-${trade.side === 'short' ? 'danger' : 'success'} ms-2">
+                                ${(trade.side || 'LONG').toUpperCase()}
+                            </span>
+                        </div>
+                        <div class="text-end">
+                            <div class="profit-${trade.profit_abs > 0 ? 'positive' : 'negative'}">
+                                $${trade.profit_abs ? trade.profit_abs.toFixed(2) : '0.00'}
+                            </div>
+                            <small class="text-muted">
+                                ${new Date(trade.close_date || Date.now()).toLocaleDateString()}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateEquityChart(data) {
+            if (equityChart && data.dates && data.equity_curve) {
+                equityChart.data.labels = data.dates.map(d => new Date(d).toLocaleDateString());
+                equityChart.data.datasets[0].data = data.equity_curve;
+                equityChart.update();
+            }
+        }
+
+        function updatePerformanceChart(data) {
+            if (performanceChart && data.strategies) {
+                performanceChart.data.labels = data.strategies.map(s => s.name);
+                performanceChart.data.datasets[0].data = data.strategies.map(s => s.total_profit || 0);
+                performanceChart.update();
+            }
+        }
+
+        // 주기적 업데이트 (30초마다)
+        setInterval(() => {
+            socket.emit('request_update');
+        }, 30000);
+    </script>
+</body>
+</html>

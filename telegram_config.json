@@ -1,0 +1,31 @@
+{
+  "bot_token": "YOUR_BOT_TOKEN_HERE",
+  "chat_id": "YOUR_CHAT_ID_HERE",
+  "enabled": false,
+  "trade_notifications": true,
+  "risk_notifications": true,
+  "performance_reports": true,
+  "notification_settings": {
+    "cooldown_seconds": 300,
+    "emergency_notifications": true,
+    "daily_report_time": "09:00",
+    "weekly_report_day": "monday"
+  },
+  "message_format": {
+    "use_html": true,
+    "include_emojis": true,
+    "timezone": "UTC"
+  },
+  "instructions": {
+    "setup_steps": [
+      "1. Create a Telegram bot by messaging @BotFather",
+      "2. Get your bot token from BotFather",
+      "3. Start a chat with your bot",
+      "4. Get your chat ID by messaging @userinfobot",
+      "5. Replace YOUR_BOT_TOKEN_HERE with your actual bot token",
+      "6. Replace YOUR_CHAT_ID_HERE with your actual chat ID",
+      "7. Set 'enabled' to true to activate notifications"
+    ],
+    "test_command": "python telegram_notifier.py"
+  }
+}

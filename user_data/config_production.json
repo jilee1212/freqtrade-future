@@ -1,0 +1,277 @@
+{
+  "trading_mode": "futures",
+  "margin_mode": "isolated",
+  "max_open_trades": 3,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.95,
+  "fiat_display_currency": "USD",
+  "dry_run": false,
+  "dry_run_wallet": 10000,
+  "cancel_open_orders_on_exit": true,
+
+  "timeframe": "5m",
+  "timeframes": {
+    "1m": "1m",
+    "5m": "5m",
+    "15m": "15m",
+    "1h": "1h",
+    "4h": "4h",
+    "1d": "1d"
+  },
+
+  "exchange": {
+    "name": "binance",
+    "key": "YOUR_PRODUCTION_API_KEY_HERE",
+    "secret": "YOUR_PRODUCTION_SECRET_KEY_HERE",
+    "ccxt_config": {
+      "enableRateLimit": true,
+      "rateLimit": 50,
+      "urls": {
+        "api": {
+          "public": "https://fapi.binance.com/fapi",
+          "private": "https://fapi.binance.com/fapi"
+        }
+      }
+    },
+    "ccxt_async_config": {
+      "enableRateLimit": true,
+      "rateLimit": 50
+    },
+    "pair_whitelist": [
+      "BTC/USDT:USDT",
+      "ETH/USDT:USDT",
+      "BNB/USDT:USDT"
+    ],
+    "pair_blacklist": [
+      "LUNA/.*",
+      "FTT/.*"
+    ],
+    "sandbox": false
+  },
+
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1,
+    "price_last_balance": 0.0,
+    "check_depth_of_market": {
+      "enabled": false,
+      "bids_to_ask_delta": 1
+    }
+  },
+
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+
+  "order_types": {
+    "entry": "limit",
+    "exit": "limit",
+    "emergency_exit": "market",
+    "force_exit": "market",
+    "force_entry": "market",
+    "stoploss": "market",
+    "stoploss_on_exchange": true,
+    "stoploss_on_exchange_interval": 60,
+    "stoploss_on_exchange_limit_ratio": 0.99
+  },
+
+  "order_time_in_force": {
+    "entry": "GTC",
+    "exit": "GTC"
+  },
+
+  "leverage": 5,
+  "liquidation_buffer": 0.05,
+
+  "pairlist": {
+    "method": "StaticPairList",
+    "config": {
+      "number_assets": 3,
+      "sort_key": "quoteVolume",
+      "min_value": 0,
+      "refresh_period": 1800
+    }
+  },
+
+  "telegram": {
+    "enabled": true,
+    "token": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
+    "chat_id": "YOUR_TELEGRAM_CHAT_ID_HERE",
+    "notification_settings": {
+      "status": "silent",
+      "warning": "on",
+      "startup": "on",
+      "entry": "on",
+      "entry_fill": "silent",
+      "exit": {
+        "roi": "silent",
+        "emergency_exit": "on",
+        "force_exit": "on",
+        "exit_signal": "on",
+        "trailing_stop_loss": "on",
+        "stop_loss": "on",
+        "stoploss_on_exchange": "on",
+        "custom_exit": "silent"
+      },
+      "entry_cancel": "on",
+      "exit_cancel": "on",
+      "exit_fill": "on",
+      "protection_trigger": "on",
+      "protection_trigger_global": "on",
+      "show_candle": "off",
+      "strategy_msg": "on"
+    },
+    "balance_dust_level": 0.01
+  },
+
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8080,
+    "verbosity": "error",
+    "enable_openapi": false,
+    "jwt_secret_key": "YOUR_JWT_SECRET_KEY_HERE",
+    "CORS_origins": ["http://localhost:3000", "http://localhost:5000"],
+    "username": "freqtrade",
+    "password": "YOUR_SECURE_PASSWORD_HERE"
+  },
+
+  "bot_name": "FreqtradeFutures-Production",
+  "initial_state": "running",
+  "force_entry_enable": false,
+  "disable_dataframe_checks": false,
+  "strategy": "AdvancedFuturesStrategy",
+  "strategy_path": "user_data/strategies/",
+  "internals": {
+    "process_throttle_secs": 5,
+    "heartbeat_interval": 60,
+    "sd_notify": false
+  },
+
+  "dataformat_ohlcv": "json",
+  "dataformat_trades": "jsongz",
+
+  "position_adjustment_enable": true,
+  "max_entry_position_adjustment": 2,
+
+  "risk_management": {
+    "max_portfolio_risk": 0.02,
+    "max_single_position_risk": 0.005,
+    "max_drawdown_limit": 0.15,
+    "daily_loss_limit": 0.05,
+    "max_consecutive_losses": 5,
+    "emergency_stop_loss": 0.10,
+    "volatility_threshold": 0.05,
+    "correlation_threshold": 0.7
+  },
+
+  "ai_optimization": {
+    "enabled": true,
+    "hyperparameter_optimization": true,
+    "pattern_analysis": true,
+    "predictive_risk_management": true,
+    "anomaly_detection": true,
+    "multi_exchange_arbitrage": false,
+    "dynamic_strategy_selection": true,
+    "ai_position_sizing": true,
+    "model_update_frequency": "weekly",
+    "confidence_threshold": 0.7
+  },
+
+  "monitoring": {
+    "prometheus_enabled": true,
+    "grafana_enabled": true,
+    "real_time_alerts": true,
+    "performance_tracking": true,
+    "health_checks": true,
+    "backup_frequency": "daily",
+    "log_level": "INFO",
+    "metric_collection_interval": 30
+  },
+
+  "compliance": {
+    "jurisdiction": "GLOBAL",
+    "position_limits": {
+      "max_notional_per_symbol": 100000,
+      "max_leverage": 10
+    },
+    "reporting": {
+      "enabled": true,
+      "frequency": "daily",
+      "format": "json"
+    },
+    "audit_trail": true,
+    "kyc_verified": false
+  },
+
+  "safety_features": {
+    "circuit_breaker": {
+      "enabled": true,
+      "daily_loss_threshold": 0.05,
+      "consecutive_loss_threshold": 5,
+      "volatility_threshold": 0.10
+    },
+    "position_limits": {
+      "max_position_size": 0.1,
+      "max_portfolio_exposure": 0.8
+    },
+    "emergency_contacts": [
+      {
+        "name": "Primary Trader",
+        "telegram": "YOUR_PERSONAL_TELEGRAM_ID",
+        "priority": 1
+      }
+    ]
+  },
+
+  "performance_targets": {
+    "target_annual_return": 0.30,
+    "max_acceptable_drawdown": 0.15,
+    "target_sharpe_ratio": 1.5,
+    "target_win_rate": 0.60,
+    "target_profit_factor": 1.5
+  },
+
+  "advanced_features": {
+    "funding_rate_optimization": true,
+    "cross_exchange_arbitrage": false,
+    "market_making": false,
+    "grid_trading": false,
+    "dca_strategy": false,
+    "portfolio_rebalancing": true,
+    "tax_optimization": false
+  },
+
+  "user_data_dir": "user_data",
+  "logfile": "logs/freqtrade_production.log",
+  "logrotation": {
+    "max_bytes": 50000000,
+    "backup_count": 10
+  },
+
+  "db_url": "sqlite:///tradesv3_production.sqlite",
+  "export": "none",
+
+  "edge": {
+    "enabled": false,
+    "process_throttle_secs": 3600,
+    "calculate_since_number_of_days": 7,
+    "allowed_risk": 0.01,
+    "stoploss_range_min": -0.01,
+    "stoploss_range_max": -0.1,
+    "stoploss_range_step": -0.01,
+    "minimum_winrate": 0.60,
+    "minimum_expectancy": 0.20,
+    "min_trade_number": 10,
+    "max_trade_duration_minute": 1440,
+    "remove_pumps": false
+  },
+
+  "freqai": {
+    "enabled": false
+  }
+}

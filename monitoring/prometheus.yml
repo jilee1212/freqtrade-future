@@ -1,0 +1,48 @@
+# Prometheus Configuration for Freqtrade Futures Bot
+# Phase 8: Monitoring and Alerting Setup
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  # Freqtrade Bot Metrics
+  - job_name: 'freqtrade-bot'
+    static_configs:
+      - targets: ['freqtrade-bot:8080']
+    scrape_interval: 30s
+    metrics_path: '/api/v1/metrics'
+    basic_auth:
+      username: 'freqtrade'
+      password: 'futures2024'
+
+  # Web Dashboard Metrics
+  - job_name: 'web-dashboard'
+    static_configs:
+      - targets: ['web-dashboard:5000']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+  # System Metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+
+  # Redis Metrics
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+
+  # Prometheus Self-Monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

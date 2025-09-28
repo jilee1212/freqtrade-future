@@ -1,0 +1,174 @@
+# CI/CD Pipeline for Freqtrade Futures Bot
+# Phase 8: Automated Deployment to Vultr
+
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main, production ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: freqtrade-futures-bot
+
+jobs:
+  # Code Quality and Testing
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest black flake8
+
+    - name: Run code formatting check
+      run: black --check .
+
+    - name: Run linting
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    - name: Run tests
+      run: |
+        pytest user_data/strategies/ -v
+        python -m freqtrade backtesting --config user_data/config_futures.json --strategy RossCameronFuturesStrategy --timerange 20240101-20240131
+
+  # Build and Push Docker Images
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  # Deploy to Vultr VPS
+  deploy:
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'
+
+    environment: production
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to Vultr VPS
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.VULTR_HOST }}
+        username: ${{ secrets.VULTR_USER }}
+        key: ${{ secrets.VULTR_SSH_KEY }}
+        port: ${{ secrets.VULTR_PORT }}
+        script: |
+          # Navigate to deployment directory
+          cd /opt/freqtrade-futures
+
+          # Pull latest code
+          git pull origin production
+
+          # Pull latest Docker images
+          docker-compose pull
+
+          # Stop existing services
+          docker-compose down
+
+          # Start services with new images
+          docker-compose up -d
+
+          # Wait for services to be healthy
+          sleep 30
+
+          # Check service health
+          docker-compose ps
+          curl -f http://localhost:5000/health || exit 1
+
+          # Clean up old images
+          docker image prune -f
+
+  # Notify deployment status
+  notify:
+    needs: [test, build, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: Notify Telegram
+      if: always()
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        format: markdown
+        message: |
+          🚀 *Freqtrade Futures Bot Deployment*
+
+          *Repository:* `${{ github.repository }}`
+          *Branch:* `${{ github.ref_name }}`
+          *Commit:* `${{ github.sha }}`
+          *Status:* ${{ job.status }}
+
+          *Jobs Status:*
+          - Test: ${{ needs.test.result }}
+          - Build: ${{ needs.build.result }}
+          - Deploy: ${{ needs.deploy.result }}
+
+          *Deployment Time:* $(date)
+
+          [View Details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

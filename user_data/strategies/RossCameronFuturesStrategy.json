@@ -1,0 +1,37 @@
+{
+  "strategy_name": "RossCameronFuturesStrategy",
+  "params": {
+    "roi": {
+      "0": 0.05,
+      "30": 0.03,
+      "60": 0.01,
+      "120": 0
+    },
+    "stoploss": {
+      "stoploss": -0.04
+    },
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 3
+    },
+    "buy": {
+      "bb_deviation": 2.287,
+      "bb_period": 17,
+      "max_leverage": 10,
+      "risk_percentage": 1.132,
+      "rsi_oversold": 33,
+      "rsi_period": 15
+    },
+    "sell": {
+      "rsi_overbought": 72
+    },
+    "protection": {}
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-09-28 10:51:14.033396+00:00"
+}

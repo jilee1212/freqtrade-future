@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategy Manager - Freqtrade Futures</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #161b22 !important;
+            border-bottom: 1px solid #21262d;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            color: #c9d1d9;
+        }
+        .card-header {
+            background-color: #21262d;
+            border-bottom: 1px solid #30363d;
+        }
+        .strategy-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .strategy-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .strategy-active {
+            border-left: 4px solid #238636;
+        }
+        .strategy-inactive {
+            border-left: 4px solid #f85149;
+        }
+        .strategy-testing {
+            border-left: 4px solid #f0883e;
+        }
+        .performance-positive { color: #238636; }
+        .performance-negative { color: #f85149; }
+        .performance-neutral { color: #f0883e; }
+        .btn-primary {
+            background-color: #238636;
+            border-color: #238636;
+        }
+        .btn-primary:hover {
+            background-color: #2ea043;
+            border-color: #2ea043;
+        }
+        .btn-danger {
+            background-color: #f85149;
+            border-color: #f85149;
+        }
+        .btn-warning {
+            background-color: #f0883e;
+            border-color: #f0883e;
+        }
+        .form-control, .form-select {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #21262d;
+            border-color: #58a6ff;
+            color: #c9d1d9;
+        }
+        .modal-content {
+            background-color: #161b22;
+            border: 1px solid #21262d;
+        }
+        .modal-header, .modal-footer {
+            border-color: #21262d;
+        }
+        .parameter-group {
+            background-color: #21262d;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .badge-success { background-color: #238636; }
+        .badge-danger { background-color: #f85149; }
+        .badge-warning { background-color: #f0883e; }
+        .badge-info { background-color: #0969da; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-chart-line me-2"></i>
+                Freqtrade Futures
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link active" href="/strategy-manager">Strategies</a>
+                <a class="nav-link" href="/risk-monitor">Risk Monitor</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2><i class="fas fa-cogs me-2"></i>Strategy Management</h2>
+                    <div>
+                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#newStrategyModal">
+                            <i class="fas fa-plus me-1"></i>New Strategy
+                        </button>
+                        <button class="btn btn-warning me-2" onclick="runBacktest()">
+                            <i class="fas fa-chart-area me-1"></i>Run Backtest
+                        </button>
+                        <button class="btn btn-info" onclick="refreshStrategies()">
+                            <i class="fas fa-sync me-1"></i>Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Overview -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-layer-group fa-2x mb-2 text-primary"></i>
+                        <h5>Total Strategies</h5>
+                        <h3 id="total-strategies" class="text-primary">3</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-play fa-2x mb-2 text-success"></i>
+                        <h5>Active</h5>
+                        <h3 id="active-strategies" class="text-success">1</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-2x mb-2 text-warning"></i>
+                        <h5>Testing</h5>
+                        <h3 id="testing-strategies" class="text-warning">1</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-stop fa-2x mb-2 text-danger"></i>
+                        <h5>Inactive</h5>
+                        <h3 id="inactive-strategies" class="text-danger">1</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Cards -->
+        <div class="row" id="strategy-container">
+            <!-- Strategy 1: Ross Cameron -->
+            <div class="col-md-4 mb-4">
+                <div class="card strategy-card strategy-active">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">RossCameronFuturesStrategy</h5>
+                        <span class="badge badge-success">ACTIVE</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small class="text-muted">Total Return</small>
+                                <div class="performance-negative h5">-0.63%</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Win Rate</small>
+                                <div class="h5">0%</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small class="text-muted">Total Trades</small>
+                                <div class="h5">2</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Max Drawdown</small>
+                                <div class="performance-negative h5">0.63%</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Current Parameters</small>
+                            <div class="mt-1">
+                                <span class="badge bg-secondary me-1">RSI: 15</span>
+                                <span class="badge bg-secondary me-1">BB: 17</span>
+                                <span class="badge bg-secondary me-1">Leverage: 10x</span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-warning btn-sm flex-fill" onclick="editStrategy('ross_cameron')">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="stopStrategy('ross_cameron')">
+                                <i class="fas fa-stop me-1"></i>Stop
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy 2: Advanced Futures -->
+            <div class="col-md-4 mb-4">
+                <div class="card strategy-card strategy-testing">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">AdvancedFuturesStrategy</h5>
+                        <span class="badge badge-warning">TESTING</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small class="text-muted">Total Return</small>
+                                <div class="performance-neutral h5">0.00%</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Win Rate</small>
+                                <div class="h5">N/A</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small class="text-muted">Total Trades</small>
+                                <div class="h5">0</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Max Drawdown</small>
+                                <div class="performance-neutral h5">0.00%</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Current Parameters</small>
+                            <div class="mt-1">
+                                <span class="badge bg-secondary me-1">Risk: 5%</span>
+                                <span class="badge bg-secondary me-1">Multi-module</span>
+                                <span class="badge bg-secondary me-1">AI Risk</span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success btn-sm flex-fill" onclick="activateStrategy('advanced')">
+                                <i class="fas fa-play me-1"></i>Activate
+                            </button>
+                            <button class="btn btn-warning btn-sm" onclick="editStrategy('advanced')">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy 3: AI Risk Management -->
+            <div class="col-md-4 mb-4">
+                <div class="card strategy-card strategy-inactive">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">FuturesAIRiskStrategy</h5>
+                        <span class="badge badge-danger">INACTIVE</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small class="text-muted">Total Return</small>
+                                <div class="performance-neutral h5">0.00%</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Win Rate</small>
+                                <div class="h5">N/A</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small class="text-muted">Total Trades</small>
+                                <div class="h5">0</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Max Drawdown</small>
+                                <div class="performance-neutral h5">0.00%</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Current Parameters</small>
+                            <div class="mt-1">
+                                <span class="badge bg-secondary me-1">Dynamic Risk</span>
+                                <span class="badge bg-secondary me-1">AI-driven</span>
+                                <span class="badge bg-secondary me-1">Adaptive</span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success btn-sm flex-fill" onclick="activateStrategy('ai_risk')">
+                                <i class="fas fa-play me-1"></i>Activate
+                            </button>
+                            <button class="btn btn-warning btn-sm" onclick="editStrategy('ai_risk')">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Comparison -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-bar me-2"></i>
+                            Strategy Performance Comparison
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="strategy-comparison-chart" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Strategy Modal -->
+    <div class="modal fade" id="newStrategyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Strategy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newStrategyForm">
+                        <div class="mb-3">
+                            <label class="form-label">Strategy Name</label>
+                            <input type="text" class="form-control" id="strategyName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Base Template</label>
+                            <select class="form-select" id="strategyTemplate">
+                                <option value="ross_cameron">Ross Cameron RSI Strategy</option>
+                                <option value="advanced">Advanced Futures Strategy</option>
+                                <option value="ai_risk">AI Risk Management Strategy</option>
+                                <option value="custom">Custom Strategy</option>
+                            </select>
+                        </div>
+                        <div class="parameter-group">
+                            <h6>RSI Parameters</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">RSI Period</label>
+                                    <input type="number" class="form-control" id="rsiPeriod" value="14" min="5" max="50">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Oversold</label>
+                                    <input type="number" class="form-control" id="rsiOversold" value="30" min="10" max="40">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Overbought</label>
+                                    <input type="number" class="form-control" id="rsiOverbought" value="70" min="60" max="90">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="parameter-group">
+                            <h6>Bollinger Bands</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Period</label>
+                                    <input type="number" class="form-control" id="bbPeriod" value="20" min="10" max="50">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Deviation</label>
+                                    <input type="number" class="form-control" id="bbDeviation" value="2.0" min="1.0" max="3.0" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="parameter-group">
+                            <h6>Risk Management</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">Max Leverage</label>
+                                    <input type="number" class="form-control" id="maxLeverage" value="10" min="1" max="20">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Risk %</label>
+                                    <input type="number" class="form-control" id="riskPercent" value="1.0" min="0.1" max="5.0" step="0.1">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Stop Loss %</label>
+                                    <input type="number" class="form-control" id="stopLoss" value="4.0" min="1.0" max="10.0" step="0.5">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="createStrategy()">Create Strategy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Strategy Modal -->
+    <div class="modal fade" id="editStrategyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Strategy Parameters</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editStrategyContent">
+                        <!-- Content will be loaded dynamically -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStrategyChanges()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Strategy comparison chart
+        let comparisonChart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initComparisonChart();
+            loadStrategyData();
+        });
+
+        function initComparisonChart() {
+            const ctx = document.getElementById('strategy-comparison-chart').getContext('2d');
+            comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['RossCameron', 'AdvancedFutures', 'AIRiskStrategy'],
+                    datasets: [{
+                        label: 'Total Return (%)',
+                        data: [-0.63, 0.00, 0.00],
+                        backgroundColor: ['#f85149', '#f0883e', '#21262d'],
+                        borderColor: ['#f85149', '#f0883e', '#30363d'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#c9d1d9' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#c9d1d9' },
+                            grid: { color: '#21262d' }
+                        },
+                        y: {
+                            ticks: { color: '#c9d1d9' },
+                            grid: { color: '#21262d' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadStrategyData() {
+            // 실제 구현에서는 API 호출
+            console.log('Loading strategy data...');
+        }
+
+        function refreshStrategies() {
+            console.log('Refreshing strategies...');
+            // API 호출하여 최신 데이터 로드
+            showNotification('Strategies refreshed', 'success');
+        }
+
+        function editStrategy(strategyId) {
+            console.log('Editing strategy:', strategyId);
+            // 전략별 파라미터 로드 후 모달 표시
+            loadStrategyParameters(strategyId);
+            new bootstrap.Modal(document.getElementById('editStrategyModal')).show();
+        }
+
+        function loadStrategyParameters(strategyId) {
+            const content = document.getElementById('editStrategyContent');
+
+            // 전략별 파라미터 폼 생성
+            const parameters = getStrategyParameters(strategyId);
+
+            content.innerHTML = `
+                <div class="parameter-group">
+                    <h6>Current Parameters for ${strategyId}</h6>
+                    ${Object.entries(parameters).map(([key, value]) => `
+                        <div class="mb-3">
+                            <label class="form-label">${key}</label>
+                            <input type="number" class="form-control" data-param="${key}" value="${value}">
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getStrategyParameters(strategyId) {
+            const parameters = {
+                'ross_cameron': {
+                    'RSI Period': 15,
+                    'RSI Oversold': 33,
+                    'RSI Overbought': 72,
+                    'BB Period': 17,
+                    'BB Deviation': 2.287,
+                    'Max Leverage': 10,
+                    'Risk Percentage': 1.132
+                },
+                'advanced': {
+                    'Max Portfolio Risk': 5.0,
+                    'Funding Importance': 0.3,
+                    'RSI Period': 14,
+                    'BB Period': 20
+                },
+                'ai_risk': {
+                    'Dynamic Risk': true,
+                    'AI Learning Rate': 0.01,
+                    'Risk Threshold': 2.5
+                }
+            };
+
+            return parameters[strategyId] || {};
+        }
+
+        function saveStrategyChanges() {
+            console.log('Saving strategy changes...');
+            // 파라미터 수집 및 저장
+            showNotification('Strategy parameters updated', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('editStrategyModal')).hide();
+        }
+
+        function activateStrategy(strategyId) {
+            console.log('Activating strategy:', strategyId);
+            showNotification(`Strategy ${strategyId} activated`, 'success');
+        }
+
+        function stopStrategy(strategyId) {
+            if (confirm('Are you sure you want to stop this strategy?')) {
+                console.log('Stopping strategy:', strategyId);
+                showNotification(`Strategy ${strategyId} stopped`, 'warning');
+            }
+        }
+
+        function createStrategy() {
+            const form = document.getElementById('newStrategyForm');
+            const formData = new FormData(form);
+
+            console.log('Creating new strategy...');
+            // 새 전략 생성 로직
+
+            showNotification('New strategy created successfully', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('newStrategyModal')).hide();
+        }
+
+        function runBacktest() {
+            console.log('Running backtest...');
+            showNotification('Backtest started. This may take a few minutes...', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            // 간단한 알림 구현
+            const colors = {
+                'success': '#238636',
+                'warning': '#f0883e',
+                'error': '#f85149',
+                'info': '#0969da'
+            };
+
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type]};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                z-index: 9999;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
