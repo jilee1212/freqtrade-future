@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freqtrade Future - Modern UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { bg: '#0d1117', card: '#161b22', border: '#21262d' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #0d1117; color: #c9d1d9; }
+        .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-hover { transition: all 0.3s; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-lg bg-opacity-80" style="background: #161b22; border-bottom: 1px solid #21262d;">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <div class="text-2xl font-bold gradient-text">Freqtrade Future</div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-sm">RUNNING</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="http://141.164.42.93:8080" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition">
+                    🚀 Open FreqUI
+                </a>
+                <button class="p-2 hover:bg-gray-800 rounded-lg transition">🔔</button>
+                <button class="p-2 hover:bg-gray-800 rounded-lg transition">⚙️</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Welcome Banner -->
+        <div class="mb-8 p-8 rounded-2xl" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <h1 class="text-4xl font-bold mb-4">🎉 Welcome to Your Modern Trading Dashboard</h1>
+            <p class="text-xl mb-6 text-white text-opacity-90">
+                AI-powered Binance Futures trading with real-time monitoring and risk management.
+            </p>
+            <div class="flex space-x-4">
+                <a href="http://141.164.42.93:8080" target="_blank" class="px-6 py-3 bg-white text-purple-700 font-bold rounded-lg hover:bg-opacity-90 transition">
+                    Launch FreqUI →
+                </a>
+                <button class="px-6 py-3 bg-white bg-opacity-20 text-white font-bold rounded-lg hover:bg-opacity-30 transition">
+                    View Docs
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="card-hover p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="text-gray-400 text-sm">Total Balance</div>
+                    <div class="text-2xl">💰</div>
+                </div>
+                <div class="text-3xl font-bold mb-2">$10,450</div>
+                <div class="flex items-center text-sm">
+                    <span class="text-green-500 mr-2">+2.3%</span>
+                    <span class="text-gray-400">vs yesterday</span>
+                </div>
+            </div>
+
+            <div class="card-hover p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="text-gray-400 text-sm">Today's P&L</div>
+                    <div class="text-2xl">📈</div>
+                </div>
+                <div class="text-3xl font-bold mb-2 text-green-500">+$234</div>
+                <div class="flex items-center text-sm">
+                    <span class="text-green-500 mr-2">+2.3%</span>
+                    <span class="text-gray-400">return</span>
+                </div>
+            </div>
+
+            <div class="card-hover p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="text-gray-400 text-sm">Win Rate</div>
+                    <div class="text-2xl">🎯</div>
+                </div>
+                <div class="text-3xl font-bold mb-2">68.5%</div>
+                <div class="flex items-center text-sm">
+                    <span class="text-green-500 mr-2">Excellent</span>
+                    <span class="text-gray-400">68/100 trades</span>
+                </div>
+            </div>
+
+            <div class="card-hover p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="text-gray-400 text-sm">Open Trades</div>
+                    <div class="text-2xl">🤖</div>
+                </div>
+                <div class="text-3xl font-bold mb-2">2</div>
+                <div class="flex items-center text-sm">
+                    <span class="text-blue-500 mr-2">Active</span>
+                    <span class="text-gray-400">positions</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <a href="http://141.164.42.93:8080" target="_blank" class="card-hover p-6 rounded-2xl cursor-pointer" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="text-4xl mb-4">📊</div>
+                <h3 class="text-xl font-bold mb-2">FreqUI Dashboard</h3>
+                <p class="text-gray-400 mb-4">Access the main FreqUI interface for trading and monitoring</p>
+                <div class="text-blue-500 font-semibold">Open FreqUI →</div>
+            </a>
+
+            <div class="card-hover p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="text-4xl mb-4">🎯</div>
+                <h3 class="text-xl font-bold mb-2">Strategy Manager</h3>
+                <p class="text-gray-400 mb-4">Manage and optimize your trading strategies</p>
+                <div class="text-gray-500 font-semibold">Coming Soon</div>
+            </div>
+
+            <div class="card-hover p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <div class="text-4xl mb-4">🛡️</div>
+                <h3 class="text-xl font-bold mb-2">Risk Monitor</h3>
+                <p class="text-gray-400 mb-4">Real-time risk analysis and alerts</p>
+                <div class="text-gray-500 font-semibold">Coming Soon</div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <h2 class="text-xl font-bold mb-4">🤖 Open Positions</h2>
+                <div class="space-y-3">
+                    <div class="p-4 rounded-lg" style="background: #0d1117; border-left: 4px solid #f85149;">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold">BTC/USDT</div>
+                                <div class="text-sm text-gray-400">SHORT</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-green-500">+$45.23</div>
+                                <div class="text-sm text-gray-400">Entry: 67,234</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-lg" style="background: #0d1117; border-left: 4px solid #238636;">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold">ETH/USDT</div>
+                                <div class="text-sm text-gray-400">LONG</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-red-500">-$12.45</div>
+                                <div class="text-sm text-gray-400">Entry: 3,456</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+                <h2 class="text-xl font-bold mb-4">📊 Recent Trades</h2>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center py-3" style="border-bottom: 1px solid #21262d;">
+                        <div>
+                            <div class="font-medium">BTC/USDT</div>
+                            <div class="text-sm text-gray-400">2 mins ago</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-green-500">+2.3%</div>
+                            <div class="text-2xl">✅</div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-3" style="border-bottom: 1px solid #21262d;">
+                        <div>
+                            <div class="font-medium">ETH/USDT</div>
+                            <div class="text-sm text-gray-400">5 mins ago</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-red-500">-1.2%</div>
+                            <div class="text-2xl">❌</div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-3">
+                        <div>
+                            <div class="font-medium">SOL/USDT</div>
+                            <div class="text-sm text-gray-400">10 mins ago</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-green-500">+4.5%</div>
+                            <div class="text-2xl">✅</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 p-6 rounded-2xl" style="background: #161b22; border: 1px solid #21262d;">
+            <h2 class="text-2xl font-bold mb-4">🚀 Getting Started</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <div class="text-3xl mb-2">1️⃣</div>
+                    <h3 class="font-bold mb-2">Access FreqUI</h3>
+                    <p class="text-gray-400 text-sm">Click the "Open FreqUI" button to access the main trading interface at port 8080</p>
+                </div>
+                <div>
+                    <div class="text-3xl mb-2">2️⃣</div>
+                    <h3 class="font-bold mb-2">Configure Strategies</h3>
+                    <p class="text-gray-400 text-sm">Set up your trading strategies, risk management, and AI optimization settings</p>
+                </div>
+                <div>
+                    <div class="text-3xl mb-2">3️⃣</div>
+                    <h3 class="font-bold mb-2">Monitor & Optimize</h3>
+                    <p class="text-gray-400 text-sm">Track performance, manage positions, and optimize your trading bot in real-time</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-8 text-center text-gray-500">
+        <p>Freqtrade Future v2025 - AI-Powered Binance Futures Trading</p>
+        <p class="mt-2">Server: 141.164.42.93 | Status: 🟢 Online</p>
+    </footer>
+
+</body>
+</html>

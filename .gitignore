@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+.next/
+dist/
+build/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+
+# Logs
+*.log
+logs/
+user_data/logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Deployment
+deploy-package/
+*.tar.gz
+
+# User data (keep structure, ignore content)
+user_data/hyperopt_results/
+user_data/plot/
+user_data/tradesv3.sqlite
+user_data/tradesv3.sqlite-shm
+user_data/tradesv3.sqlite-wal
+user_data/backtest_results/
+
+# Keep essential config files
+!user_data/config_futures.json
+!user_data/strategies/
