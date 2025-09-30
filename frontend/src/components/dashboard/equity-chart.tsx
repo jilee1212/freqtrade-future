@@ -37,8 +37,10 @@ export function EquityChart({ data, height = 400 }: EquityChartProps) {
       },
     })
 
-    const lineSeries = chart.addLineSeries({
-      color: '#22c55e',
+    const lineSeries = chart.addAreaSeries({
+      lineColor: '#22c55e',
+      topColor: '#22c55e33',
+      bottomColor: '#22c55e00',
       lineWidth: 2,
     })
 
