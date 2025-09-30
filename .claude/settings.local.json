@@ -30,7 +30,10 @@
       "Bash(cmd:*)",
       "Bash(chmod:*)",
       "Bash(bash:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(ssh-keygen:*)"
     ],
     "deny": [],
     "ask": []
