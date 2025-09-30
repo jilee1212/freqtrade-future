@@ -5,19 +5,23 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
+  Home,
   LayoutDashboard,
   TrendingUp,
   Shield,
   Settings,
-  Activity
+  Activity,
+  ExternalLink
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigation = [
+  { name: "Home", href: "/", icon: Home },
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Trades", href: "/trades", icon: Activity },
   { name: "Strategies", href: "/strategies", icon: TrendingUp },
   { name: "Risk Monitor", href: "/risk", icon: Shield },
+  { name: "FreqUI", href: "/freqtrade", icon: ExternalLink },
   { name: "Settings", href: "/settings", icon: Settings },
 ]
 
